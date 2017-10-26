@@ -11,8 +11,6 @@ public class PlayerHealth : MonoBehaviour {
 	static int playerHealthCurrent = 16;
 	static int playerHealthMax = 16;
 
-	static bool healthIsMaxed = true;
-
 	#region Events
 
 	public delegate void PlayerHealthEvent(int change);
@@ -23,6 +21,19 @@ public class PlayerHealth : MonoBehaviour {
 		playerHealthCurrent += healthChange;
 		playerHealthCurrent = Mathf.Clamp(playerHealthCurrent, 0, playerHealthMax);
 
+		HealthChange (healthChange);
+	}
+
+	#endregion
+
+	public static int GetCurrentHealth(){
+		return playerHealthCurrent;
+	}
+
+}
+
+
+/*
 		if(playerHealthCurrent == 16){
 			if(!healthIsMaxed){				
 				HealthChange (healthChange);
@@ -31,14 +42,10 @@ public class PlayerHealth : MonoBehaviour {
 		}
 		else if(playerHealthCurrent != 0){
 			HealthChange (healthChange);
+			//Destroy health pickup
 			healthIsMaxed = false;
 		}
 		else{
 			
 			//Need an else for when the player is at zero health
-		}
-	}
-
-	#endregion
-
-}
+		}*/

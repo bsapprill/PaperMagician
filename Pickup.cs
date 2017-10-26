@@ -9,7 +9,7 @@ using UnityEngine;
 */
 public class Pickup : MonoBehaviour {
 	
-	public enum PickupType {Health};
+	public enum PickupType {Health, Memory};
 	public PickupType ThisPickupType;
 
 	#region Health Pickup
@@ -18,17 +18,23 @@ public class Pickup : MonoBehaviour {
 
 	#endregion
 
-	void OnCollisionEnter(Collision other){
+	void OnTriggerEnter(Collider other){
 		if(other.gameObject.name == "Player"){
 
 			switch(ThisPickupType){
 				case PickupType.Health:
-				
-				PlayerHealth.PlayerHealthChange(healthIncrease);//This calls a static function
-				break;
+					if(PlayerHealth.GetCurrentHealth()==16){
+						break;
+					}
+					else{					
+						PlayerHealth.PlayerHealthChange(healthIncrease);
+						Destroy(this.gameObject);
+						break;
+					}
+				case PickupType.Memory:
+					break;
 			}
 
-			Destroy(this.gameObject);
 		}
 	}
 }
