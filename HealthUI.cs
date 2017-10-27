@@ -43,13 +43,19 @@ public class HealthUI : MonoBehaviour {
 
 	void UpdateHeartPieces(int value){
 		if(value > 0){			
-			//This will not go over the max array size b/c the delegate is not called if the player is at full health
-			currentHeartPieceElement += value;
-			heartPieceObjs [currentHeartPieceElement].SetActive (true);
+			for (int i = 0; i < value; i++){				
+				//This will not go over the max array size b/c the delegate is not called if the player is at full health
+				if (currentHeartPieceElement < 15) {
+					currentHeartPieceElement++;
+					heartPieceObjs [currentHeartPieceElement].SetActive (true);
+				}
+			}
 		}
 		else{
-			heartPieceObjs [currentHeartPieceElement].SetActive (false);
-			currentHeartPieceElement += value;
+			for (int i = 0; i < Mathf.Abs(value); i++) {				
+				heartPieceObjs [currentHeartPieceElement].SetActive (false);
+				currentHeartPieceElement--;
+			}
 		}			
 	}
 
