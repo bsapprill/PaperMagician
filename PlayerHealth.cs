@@ -22,6 +22,17 @@ public class PlayerHealth : MonoBehaviour {
 		playerHealthCurrent = Mathf.Clamp(playerHealthCurrent, 0, playerHealthMax);
 
 		HealthChange (healthChange);
+
+		if(playerHealthCurrent == 0){
+			PlayerHealthIsZero ();
+		}
+	}
+
+	public delegate void PlayerHealthZeroEvent();
+	public static event PlayerHealthZeroEvent PlayerHealthZero;
+
+	public static void PlayerHealthIsZero (){
+		PlayerHealthZero();
 	}
 
 	#endregion

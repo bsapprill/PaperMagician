@@ -33,10 +33,12 @@ public class HealthUI : MonoBehaviour {
 	//These are used for subscribing to messages for the most part
 	void OnEnable (){
 		PlayerHealth.HealthChange += UpdateHeartPieces;
+		PlayerHealth.PlayerHealthZero += ResetHeartPieces;
 	}
 
 	void OnDisable (){
 		PlayerHealth.HealthChange -= UpdateHeartPieces;
+		PlayerHealth.PlayerHealthZero -= ResetHeartPieces;
 	}
 
 	#region Function
@@ -57,6 +59,12 @@ public class HealthUI : MonoBehaviour {
 				currentHeartPieceElement--;
 			}
 		}			
+	}
+
+	void ResetHeartPieces(){
+		for (int a = 0; a < heartPieceObjs.Length; a++) {
+			heartPieceObjs[a].gameObject.SetActive (true);
+		}
 	}
 
 	#endregion

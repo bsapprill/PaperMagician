@@ -16,7 +16,7 @@ public class DripCeiling : MonoBehaviour {
 	#endregion
 
 	void Start(){
-		Vector3 dripSpawn = CalculateDripSpawn ();
+		dripSpawn = transform.position;
 	}
 
 	void Update(){
@@ -29,15 +29,6 @@ public class DripCeiling : MonoBehaviour {
 	}
 
 	#region Functions
-
-	//May be expanded later
-	Vector3 CalculateDripSpawn(){
-		Vector3 centerOfCeilingDrip = Vector3.zero;
-
-		centerOfCeilingDrip.x = transform.position.x;
-
-		return centerOfCeilingDrip;
-	}
 
 	#endregion
 }

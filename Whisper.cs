@@ -11,7 +11,6 @@ public class Whisper : MonoBehaviour {
 
 	public float stunRadius;
 	public float stunDuration;
-	float stunTimer = 0f;
 	float inStunRadiusTimer = 0f;
 	public float timeTillStunOccurs;
 	float distanceFromPlayer;
@@ -24,18 +23,11 @@ public class Whisper : MonoBehaviour {
 
 	Transform playersTransform;
 
-	bool playerIsStunned = false;
 	bool whisperIsTransparent = false;
-
-	//Whisper moves back and forth
-	//Whisper can stun the player
-	//Whisper can damage the player
-	//Whisper can swap between transparency
-	//Whisper only attacks when the player is stunned
 
 	void Start(){
 		moveDirection = Vector3.left;
-		playersTransform = GameObject.Find ("Player").transform;
+		playersTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		whisperRenderer = GetComponent<Renderer> ();
 	}
 
@@ -50,28 +42,22 @@ public class Whisper : MonoBehaviour {
 
 		SetDistanceFromPlayer ();
 
-		if(!playerIsStunned){			
+		if(!PlayerStun.playerIsStunned){			
 			if (distanceFromPlayer <= stunRadius) {
 				inStunRadiusTimer += Time.deltaTime;
 				if (inStunRadiusTimer > timeTillStunOccurs) {
-					playerIsStunned = true;
+					PlayerStun.playerIsStunned = true;
+					PlayerStun.stunDuration = stunDuration;
+
 					PlayerHealth.PlayerHealthChange (-attackDamage);//Health is changed by the value passed in
 					inStunRadiusTimer = 0f;
-					//Player needs to lose control of movement at this point; need to send message to player
+
 					whisperIsTransparent = true;
 					SetWhisperTransparency (whisperIsTransparent);
 				}
 			}
 			else if(distanceFromPlayer > stunRadius){
 				inStunRadiusTimer = 0f;
-			}
-		}
-		else{
-			stunTimer += Time.deltaTime;
-			if(stunTimer > stunDuration){
-				stunTimer = 0;
-				playerIsStunned = false;
-				//Player re-gains control of movement; need message to be sent to player
 			}
 		}
 
